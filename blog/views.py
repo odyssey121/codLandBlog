@@ -55,8 +55,8 @@ def register(request):
 
 def home(request):
     articles = models.Article.objects.order_by('-create_time').all()
-    article_recent = articles[0] if len(articles) > 1 else None
-    article_list = articles[1:] if len(articles) >= 1 else articles
+    article_recent = articles[0] if len(articles) >= 1 else None
+    article_list = articles[1:] if len(articles) > 1 else articles
     category_list = models.Category.objects.all()
     return render(request, 'home.html', {
         "article_recent": article_recent,
