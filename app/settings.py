@@ -45,6 +45,7 @@ AUTH_USER_MODEL = 'blog.AuthUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -138,6 +139,6 @@ LOGIN_URL = "/login/"
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
