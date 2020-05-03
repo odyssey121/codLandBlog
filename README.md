@@ -7,16 +7,19 @@
 ## CMD
 
 ```bash
-1 create auth migration  
+1 install dependencies
+$ pip install -r requirements.txt
+
+2 create auth migration  
 $ python manage.py migrate auth
 
-2 create blog migration  
+3 create blog migration  
 $ python manage.py migrate blog
 
-3 create other migration
+4 create other migration
 $ python manage.py migrate
 
-4 run dev server  
+5 run dev server  
 $ python manage.py runserver
 ```
 
