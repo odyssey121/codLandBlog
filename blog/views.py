@@ -14,9 +14,11 @@ from os import path
 # Create your views here.
 from blog import models
 
+
 def logout(request):
     auth.logout(request)
     return redirect('blog:login')
+
 
 def login(request):
     if request.method == "POST":
@@ -52,14 +54,24 @@ def register(request):
 
 
 def home(request):
-    article_list = models.Article.objects.order_by('-create_time')
+    articles_obj_sorted = models.Article.objects.order_by('-create_time')
+    try:
+        article_recent = articles_obj_sorted.first()
+    except:
+        article_recent = None
+    try:
+        article_list = articles_obj_sorted.all()[1:0]
+    except:
+        article_list = []
+
     category_list = models.Category.objects.all()
     return render(request, 'home.html', {
-        "article_recent":article_list.first(),
-        "article_list": article_list.all()[1:],
+        "article_recent": article_recent,
+        "article_list": article_list,
         "category_list": category_list,
         "title": "Главная"
     })
+
 
 @login_required
 def add_article(request):
@@ -74,9 +86,9 @@ def add_article(request):
             if file_obj:
                 file_uuid_name = uuid()
                 file_ext = mimetypes.guess_extension(file_obj.content_type)
-                file_name = "{}{}".format(file_uuid_name,file_ext)
+                file_name = "{}{}".format(file_uuid_name, file_ext)
                 saved_data['prev_image'] = file_name
-                filepath = path.join(settings.MEDIA_ROOT,'image',file_name)
+                filepath = path.join(settings.MEDIA_ROOT, 'image', file_name)
                 with open(filepath, "wb") as f:
                     for chunk in file_obj.chunks():
                         f.write(chunk)
@@ -89,7 +101,8 @@ def add_article(request):
                 if tag.name in ['script', 'link']:
                     tag.decompose()
             article_obj = Article.objects.create(**saved_data)
-            ArticleDetail.objects.create(content=str(bs), article=article_obj, image=saved_data.get("prev_image", 'not_found.png'))
+            ArticleDetail.objects.create(content=str(bs), article=article_obj,
+                                         image=saved_data.get("prev_image", 'not_found.png'))
             return redirect("blog:home")
 
         else:
