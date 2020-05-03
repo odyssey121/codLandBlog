@@ -7,6 +7,7 @@ django-materialize-css==0.0.1
 django-redactoreditor==1.2.10
 django-summernote==0.8.11.6
 django-uuid-upload-path==1.0.0
+gunicorn==20.0.4
 psycopg2==2.8.5
 pytz==2020.1
 six==1.14.0
