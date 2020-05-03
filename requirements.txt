@@ -1,0 +1,14 @@
+asgiref==3.2.7
+beautifulsoup4==4.9.0
+Django==3.0.5
+django-js-asset==1.2.2
+django-materialize==1.0.1a2
+django-materialize-css==0.0.1
+django-redactoreditor==1.2.10
+django-summernote==0.8.11.6
+django-uuid-upload-path==1.0.0
+psycopg2==2.8.5
+pytz==2020.1
+six==1.14.0
+soupsieve==2.0
+sqlparse==0.3.1

@@ -1,0 +1,40 @@
+{% extends 'layout/base.html' %}
+
+
+
+{% block content %}
+    <h1 class="center blue-text text-accent-4">Регистрация</h1>
+    <form action="{% url "blog:register" %}" method="POST" autocomplete="off">
+        {% csrf_token %}
+        <div class="col s6">
+            <div class="row ce">
+                <div class="input-field col s6 offset-s3">
+                    {{ form_obj.username }}
+                    <label for="{{ form_obj.username.id_for_label }}">{{ form_obj.username.label }}</label>
+                    <span class="helper-text" data-error="wrong" data-success="right"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 offset-s3">
+                    {{ form_obj.password }}
+                    <label for="{{ form_obj.password.id_for_label }}">{{ form_obj.password.label }}</label>
+                    <span class="helper-text" data-error="wrong" data-success="right"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 offset-s3">
+                    {{ form_obj.re_password }}
+                    <label for="{{ form_obj.re_password.id_for_label }}">{{ form_obj.re_password.label }}</label>
+                    <span class="helper-text" data-error="wrong" data-success="right"></span>
+                </div>
+            </div>
+            <div class="input-field col s3  center-align offset-s3">
+                <button class="btn blue accent-4" type="submit" name="action">
+                    Зарегистрироваться
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

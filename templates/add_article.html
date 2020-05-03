@@ -1,0 +1,79 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+    <h1 class="blue-text text-accent-4">Добавить статью</h1>
+    <form action="{% url 'blog:add_article' %}" method="POST" autocomplete="off" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="col m12">
+    <div class="row">
+        <div class="input-field col m6 ">
+            {{ form_obj.title }}
+            <label for="{{ form_obj.title.id_for_label }}">{{ form_obj.title.label }}</label>
+            <span class="helper-text" data-error="wrong" data-success="right"></span>
+        </div>
+        <div class="input-field col m4  center-align offset-m2">
+            <button class="btn red lighten-1" type="submit" name="action">
+                Опубликовать
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col m8">
+            {{ form_obj.media }}
+            {{ form_obj.desc }}
+        </div>
+        <div class="file-upload-layout col m4">
+            <div class="upload-header">
+                <h5>Загрузить изображение</h5>
+                <a class="upload-btn waves-effect waves-light btn"><i
+                        class="material-icons right">cloud_upload</i>Выбрать</a>
+
+                <img src="{% static 'image/pip.svg' %}" alt="close"
+                     class="pip hide"></div>
+
+            {{ form_obj.image }}
+            <output id="list"></output>
+        </div>
+    </div>
+    </div>
+    </form>
+{% endblock %}
+{% block script %}
+    <script>
+        function handleFileSelect(evt) {
+            var file = evt.target.files[0];
+
+            var reader = new FileReader();
+
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    var span = document.createElement('span');
+                    span.innerHTML = ['<img style="width:95%; border-width:3px; border-style:solid; border-color:#000; margin:8px;" src="', e.target.result, '" title="', escape(theFile.name), '"/>'].join('');
+                    document.getElementById('list').insertBefore(span, null);
+                    document.getElementById("files").classList.add('hide');
+                    let close = document.querySelector('.pip');
+                    close.classList.toggle('hide');
+                    document.querySelector(".upload-btn").classList.toggle('display-none');
+                };
+            })(file);
+            reader.readAsDataURL(file);
+        }
+
+        document.getElementById('files').addEventListener('change', handleFileSelect, false);
+        document.querySelector('.pip').addEventListener('click', function () {
+            let spanPreview = document.getElementById('list').childNodes[0];
+            if (spanPreview) {
+                document.getElementById('list').removeChild(spanPreview);
+                document.getElementById("files").value = null;
+                document.querySelector(".upload-btn").classList.toggle('display-none');
+                document.querySelector('.pip').classList.toggle('hide');
+            }
+        }, false);
+
+        document.querySelector(".upload-btn").addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('files').click();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,19 @@
+<div class="breadcrumb-wrapper">
+    <a href="{% url "blog:home" %}" class="breadcrumb">Блог</a>
+    {% if request.path == '/add_article/' %}
+        <a href="{% url "blog:add_article" %}" class="breadcrumb">
+            <span class="slash">/</span>
+            Добавить статью
+        </a>
+    {% elif request.path == '/register/' %}
+        <a href="{% url "blog:register" %}" class="breadcrumb">
+            <span class="slash">/</span>
+            Регистрация
+        </a>
+    {% elif request.path == '/login/' %}
+        <a href="{% url "blog:login" %}" class="breadcrumb">
+            <span class="slash">/</span>
+            Логин
+        </a>
+    {% endif %}
+</div>

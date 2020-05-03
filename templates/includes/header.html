@@ -1,0 +1,48 @@
+{% load static %}
+<div class="row col s12">
+    <div class="row left-hd-area col s7 ">
+        <div class="logo-area flex">
+            <a href="{% url 'blog:home' %}">
+                <img src="{% static 'image/logo.svg' %}" alt="logo">
+            </a>
+            {% include "includes/breadcrumbs.html" %}
+        </div>
+    </div>
+    <div class="row user-info col s5 ">
+        <div class="row col s12">
+            <div class="gretting-user col s8 center">
+                <div class="settings-user flx-panel">
+                    <div class="nav-wrapper">
+                        <nav class="blue accent-4">
+                            <div class="nav-wrapper">
+                                <ul class="right hide-on-small-and-down">
+                                    {% if user.is_authenticated %}
+                                        {% if request.path == '/add_article/' %}
+                                            <li><a href="{% url 'blog:home' %}">Главная</a></li>
+                                        {% else %}
+                                            <li><a href="{% url 'blog:add_article' %}">Создать статью</a></li>
+                                        {% endif %}
+                                    {% else %}
+                                        <li><a href="{% url 'blog:login' %}">Вход</a></li>
+                                        <li><a href="{% url 'blog:register' %}">Регистрация</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-user col s4 flx-panel">
+                {% if user.is_authenticated %}
+                    <img src="{% static 'image/email.svg' %}" alt="message" class="message-icon">
+                    <div class="avatar-area">
+                        <img src="{{ user.avatar }}">
+                    </div>
+                    <a href="{% url "blog:logout" %}">
+                        <img src="{% static 'image/logout.svg' %}" alt="message" class="logout-icon">
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

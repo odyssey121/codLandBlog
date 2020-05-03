@@ -1,0 +1,86 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="row col s12">
+        {% if article_recent %}
+            <div class="fresh-article col s12 m7">
+                <div class="row flex-between">
+                    <span class="new-spn">New</span>
+                    {% include "includes/interactive_icon.html" %}
+                    <div>Дата : {{ article_recent.create_time | date:"m d h:i a" }}</div>
+                    <div>Автор : {{ article_recent.user }}</div>
+                </div>
+                <div class="row">
+                    <h2 class="row blue-text text-accent-4">
+                        {% if article_recent.title|length > 10 %}
+                            {{ article_recent.title|slice:":57" |add:'...' }}
+                        {% else %}
+                            {{ article_recent.title }}
+                        {% endif %}
+                    </h2>
+                </div>
+                <div class="row desc-block">
+                    <p class="flow-text">
+                        {{ article_recent.desc }}
+                    </p>
+                </div>
+            </div>
+            <div class="image-area col s12 m5 ">
+                <img src="/media/image/{{ article_recent.prev_image }}" alt="img" class="responsive-img">
+            </div>
+            <div class="row col s12">
+                <a class="btn-large blue accent-4">Читать дальше</a>
+            </div>
+        {% else %}
+            <div class="fresh-article col s7">
+                <div class="row">
+                    <h2 class="row blue-text text-accent-4">
+                        Здесь пока еще ничего нету...</h2>
+                </div>
+                <div class="row desc-block">
+                    <p class="flow-text">
+                        Зарегестрируйтесь и создайте статью для нашего блога.
+                    </p>
+                </div>
+            </div>
+            <div class="image-area col s5 hide-on-small-and-down">
+                <img src="{% static "image/robot.svg" %}" alt="robot">
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block articles %}
+    <div class="row flex-between col s12 m12">
+        <h2 class="blue-text text-accent-4 col s11">Другие статьи</h2>
+        <img src="{% static 'image/pipe.svg' %}" alt="pipe">
+    </div>
+    {% if article_list %}
+        <div class="row article-list center">
+            {% for article in article_list %}
+                <div class="article-item col s12 m4 ">
+                    <div class="item-inner-layout">
+                        <div class="flex-between">
+                            <span>Дата : {{ article.create_time | date:"m d h:i a" }}</span>
+                            <span>Автор : {{ article.user }}</span>
+                        </div>
+                        <div class="img-preview">
+                            <img src="/media/image/{{ article.prev_image }}" alt="prev_image" class="responsive-img">
+                        </div>
+                        <h5 class="blue-text text-accent-4 item-title">
+                            {% if article.title|length > 46 %}
+                                {{ article.title|slice:":46" |add:'...' }}
+                            {% else %}
+                                {{ article.title }}
+                            {% endif %}
+                        </h5>
+                        <div class="flex-between">
+                            {% include "includes/interactive_icon.html" %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="flow-text">Не нашлось ни одной статьи...</p>
+    {% endif %}
+{% endblock %}

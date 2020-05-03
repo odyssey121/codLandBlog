@@ -1,0 +1,14 @@
+*.pyc
+*~
+*.*~
+*.zip
+*.egg-info
+*.db
+build/
+dist/
+tests/
+app_tests
+app/.coverage
+app/media
+venv
+.idea
