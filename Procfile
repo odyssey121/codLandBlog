@@ -1,2 +1,2 @@
-web:gunicorn app.wsgi
-heroku ps:scale web=1
+#Procfile
+web: gunicorn app.wsgi --log-file -
